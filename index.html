@@ -1,0 +1,519 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Responsive Sidebar</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap 3 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <style>
+        body {
+            overflow-x: hidden;
+            background: #e5e1f1;
+        }
+
+        /* ================= NAVBAR ================= */
+        #nvbar {
+            padding-bottom: 2px;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        #faicon, #fauser {
+            font-size: 26px;
+            color: rebeccapurple;
+        }
+
+        #fanote, #fabell, #famail {
+            font-size: 20px;
+        }
+
+        /* ================= SIDEBAR ================= */
+        #sidebar {
+            position: fixed;
+            top: 50px;
+            left: 0;
+            width: 220px;
+            height: 100%;
+            background: #fff;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .profile-row {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            gap: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+            .profile-row img {
+                width: 45px;
+                height: 45px;
+                border-radius: 50%;
+            }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .username {
+            font-weight: bold;
+            color: rebeccapurple;
+        }
+
+        .designation {
+            font-size: 12px;
+            color: gray;
+        }
+
+        #sidebar ul.nav li a {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            color: #333;
+        }
+
+            #sidebar ul.nav li a:hover {
+                background: rebeccapurple;
+                color: #fff;
+            }
+
+        #addProjectBtn {
+            width: 100%;
+            background: rebeccapurple;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        /* ================= CONTENT ================= */
+        #content {
+            margin-left: 220px;
+            padding: 20px;
+            margin-top: 50px;
+        }
+
+        #cr1 {
+            background: #aca8ba;
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        #btnpro {
+            background: rebeccapurple;
+            color: #fff;
+            border-radius: 6px;
+            border: none;
+            padding: 8px 12px;
+        }
+
+        #btndwn {
+            border-radius: 6px;
+            padding: 8px 12px;
+        }
+
+        #cr2 {
+            padding: 12px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        #homeicon {
+            background: #7c63f4;
+            color: #fff;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        #salesCardTop,
+        #ordersCardTop,
+        #visitorsCardTop {
+            position: relative;
+            height: 220px;
+            border-radius: 12px;
+            color: #fff;
+            padding: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+            #salesCardTop h2,
+            #ordersCardTop h2,
+            #visitorsCardTop h2 {
+                margin: 8px 0;
+                font-weight: bold;
+            }
+
+            #salesCardTop .card-title,
+            #ordersCardTop .card-title,
+            #visitorsCardTop .card-title {
+                font-size: 14px;
+                opacity: 0.9;
+            }
+
+            #salesCardTop .card-footer,
+            #ordersCardTop .card-footer,
+            #visitorsCardTop .card-footer {
+                font-size: 12px;
+                opacity: 0.85;
+            }
+
+            #salesCardTop .card-icon,
+            #ordersCardTop .card-icon,
+            #visitorsCardTop .card-icon {
+                position: absolute;
+                right: 20px;
+                top: 20px;
+                font-size: 26px;
+                opacity: 0.9;
+            }
+
+        #salesCardTop {
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        }
+
+        #ordersCardTop {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+        }
+
+        #visitorsCardTop {
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+        }
+
+        #salesCard,
+        #trafficCard {
+            background: #f3f2fb;
+            border-radius: 18px;
+            padding: 20px 25px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+        }
+
+            #salesCard h4,
+            #trafficCard h4 {
+                font-size: 16px;
+                font-weight: 600;
+                color: #6b7280;
+                margin-bottom: 15px;
+            }
+
+            #salesCard .chart-container {
+                height: 320px;
+            }
+
+            #trafficCard .chart-container {
+                height: 320px;
+            }
+            #salesCard:hover,
+            #trafficCard:hover {
+                transform: translateY(-4px);
+                transition: 0.3s ease;
+            }
+
+        /* ================= MOBILE ================= */
+        @media (max-width: 768px) {
+            .container,
+            .container-fluid {
+                width: 100% !important;
+                max-width: 100% !important;
+                padding-left: 10px !important;
+                padding-right: 10px !important;
+                margin: 0 !important;
+            }
+
+            #salesCardTop,
+            #ordersCardTop,
+            #visitorsCardTop,
+            #salesCard,
+            #trafficCard {
+                margin-bottom: 15px;
+            }
+
+            .row {
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+            }
+
+            [class*="col-"] {
+                padding-left: 5px !important;
+                padding-right: 5px !important;
+            }
+            #sidebar {
+                left: -220px;
+            }
+
+                #sidebar.active {
+                    left: 0;
+                }
+            #content {
+                margin-left: 0 !important;
+                padding: 10px !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+            #cr1 {
+                flex-direction: column;
+                text-align: center;
+                margin-top: 70px;
+            }
+
+                #cr1 button {
+                    width: 100%;
+                    margin-top: 6px;
+                }
+            #cr2 {
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+            }
+            .navbar-header {
+                width: 100%;
+            }
+
+            .navbar-right {
+                gap: 15px;
+                margin-right: 0;
+            }
+            /* OVERLAY */
+            body.sidebar-open::before {
+                content: "";
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.4);
+                z-index: 999;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-default navbar-fixed-top" id="nvbar">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" id="sidebarToggle" class="navbar-toggle">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <i class="fa fa-diamond" id="faicon"></i>
+                    <span style="margin-left:6px;color:rebeccapurple">Purple</span>
+                </a>
+            </div>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><i class="fa fa-user" id="fauser"></i>&nbsp; JohnDoe</a></li>
+                <li><i class="fa fa-sticky-note-o" id="fanote"></i></li>
+                <li><i class="fa fa-bell" id="fabell"></i></li>
+                <li><i class="fa fa-envelope-o" id="famail"></i></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- SIDEBAR -->
+    <div id="sidebar">
+        <div class="profile-row">
+            <img src="https://i.pravatar.cc/100">
+            <div class="profile-info">
+                <span class="username">John Doe</span>
+                <span class="designation">Software Developer</span>
+            </div>
+        </div>
+
+        <ul class="nav">
+            <li><a href="#">Dashboard <i class="fa fa-dashboard"></i></a></li>
+            <li><a href="#">Profile <i class="fa fa-user"></i></a></li>
+            <li><a href="#">Settings <i class="fa fa-cog"></i></a></li>
+            <li><a href="#">Logout <i class="fa fa-sign-out"></i></a></li>
+            <li><a href="#">Dashboard <i class="fa fa-dashboard"></i></a></li>
+            <li><a href="#">Profile <i class="fa fa-user"></i></a></li>
+            <li><a href="#">Settings <i class="fa fa-cog"></i></a></li>
+            <li><a href="#">Logout <i class="fa fa-sign-out"></i></a></li>
+        </ul>
+
+        <div style="padding:15px;">
+            <button id="addProjectBtn">+ Add Project</button>
+        </div>
+
+        <div class="categories" style="padding: 0 20px; margin-top: 20px;">
+            <h5 style="color: #AA98A9; margin-bottom: 10px; ">Categories</h5>
+        </div>
+
+
+        <hr style="border-color:#444; margin:20px 0;">
+        <div class="categories" style="padding: 0 20px;">
+            <ul class="nav">
+                <li>
+                    <a href="#"><i class="fa fa-circle-o" style="color:red; font-size:14px; margin-right:10px;font-weight:bold;"></i> Free</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-circle-o" style="color:blue; font-size:14px; margin-right:10px;font-weight:bold;"></i> Pro</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div id="content">
+
+        <div id="cr1">
+            <p>Like what you see? Check out our premium version.</p>
+            <div>
+                <button id="btndwn">Download Free</button>
+                <button id="btnpro">Upgrade Pro</button>
+            </div>
+        </div>
+
+        <div id="cr2">
+            <div style="display:flex;align-items:center;">
+                <div id="homeicon"><i class="fa fa-home"></i></div>
+                <strong>Dashboard</strong>
+            </div>
+            <span style="font-size:12px;">Overview <i class="fa fa-info-circle"></i></span>
+        </div>
+
+        <div class="row" style="margin-top: 25px;padding:15px;">
+            <div class="col-md-4">
+                <div class="card" id="salesCardTop">
+                    <p class="card-title">Weekly Sales</p>
+                    <h2>$15,000</h2>
+                    <p class="card-footer">Increased by 60%</p>
+                    <i class="fa fa-line-chart card-icon"></i>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card" id="ordersCardTop">
+                    <p class="card-title">Weekly Orders</p>
+                    <h2>45,633</h2>
+                    <p class="card-footer">Decreased by 10%</p>
+                    <i class="fa fa-bookmark card-icon"></i>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card" id="visitorsCardTop">
+                    <p class="card-title">Visitors Online</p>
+                    <h2>95,574</h2>
+                    <p class="card-footer">Increased by 5%</p>
+                    <i class="fa fa-diamond card-icon"></i>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="row" style="margin-top: 25px; padding:15px;">
+            <div class="col-md-7">
+                <div class="card" id="salesCard">
+                    <h4>Visit And Sales Statistics</h4>
+                    <div class="chart-container">
+                        <canvas id="salesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                <div class="card" id="trafficCard">
+                    <h4>Traffic Sources</h4>
+                    <div class="chart-container">
+                        <canvas id="trafficChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+  
+
+    <script>
+        $("#sidebarToggle").click(function () {
+            $("#sidebar").toggleClass("active");
+            $("body").toggleClass("sidebar-open");
+        });
+    </script>
+
+    <script>
+        /* Bar Chart */
+        const salesCtx = document.getElementById('salesChart').getContext('2d');
+        new Chart(salesCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+                datasets: [
+                    {
+                        label: 'CHN',
+                        data: [12, 19, 10, 15, 14, 20, 16, 12],
+                        backgroundColor: '#8b5cf6'
+                    },
+                    {
+                        label: 'USA',
+                        data: [15, 14, 12, 8, 18, 10, 14, 17],
+                        backgroundColor: '#fb7185'
+                    },
+                    {
+                        label: 'UK',
+                        data: [20, 5, 14, 18, 12, 19, 9, 14],
+                        backgroundColor: '#60a5fa'
+                    }
+                ]
+            },
+            options: {
+                responsive: true
+            }
+        });
+
+        /* Donut Chart */
+        const trafficCtx = document.getElementById('trafficChart').getContext('2d');
+        new Chart(trafficCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Search Engines', 'Direct Click', 'Bookmarks'],
+                datasets: [{
+                    data: [30, 30, 40],
+                    backgroundColor: ['#60a5fa', '#34d399', '#fb7185']
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    </script>
+
+
+</body>
+</html>
+
